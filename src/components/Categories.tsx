@@ -1,7 +1,10 @@
 import { useState } from 'react';
 
-export default function Categories() {
-  const [activeIndex, setActiveIndex] = useState(0);
+interface categoriesTypes{
+  value: number
+  onClick: Function;
+}
+export default function Categories({value, onClick}: categoriesTypes) {
 
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые', 'Новые'];
 
@@ -11,8 +14,8 @@ export default function Categories() {
         {categories.map((category, index) => (
           <li
             key={index}
-            className={activeIndex === index ? 'active' : ''}
-            onClick={() => setActiveIndex(index)}>
+            className={value === index ? 'active' : ''}
+            onClick={() => onClick(index)}>
             {category}
           </li>
         ))}

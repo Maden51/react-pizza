@@ -1,12 +1,26 @@
 import { useState } from 'react';
 
-export default function Sort() {
-  const [isOpen, setIsOpen] = useState(false);
-  const sortTypes = ['популярности', 'цене', 'алфавиту'];
-  const [activeType, setActiveType] = useState(0);
+interface sortTypes {
+  value: {
+    name: string;
+    sortProperty: string;
+  };
+  onClick: Function;
+}
 
-  const sortHandler = (index: number) => {
-    setActiveType(index);
+export default function Sort( {value, onClick}: sortTypes) {
+  const [isOpen, setIsOpen] = useState(false);
+  const sortTypes = [
+    {name: 'популярности ↑', sortProperty: '-rating'}, 
+    {name: 'популярности ↓', sortProperty: 'rating'}, 
+    {name: 'цене ↑', sortProperty: '-price'}, 
+    {name: 'цене ↓', sortProperty: 'price'}, 
+    {name: 'алфавиту ↑', sortProperty: '-title'},
+    {name: 'алфавиту ↓', sortProperty: 'title'}
+  ];
+
+  const sortHandler = (index: object) => {
+    onClick(index);
     setIsOpen(false);
   };
 
@@ -25,7 +39,7 @@ export default function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsOpen(!isOpen)}>{sortTypes[activeType]}</span>
+        <span onClick={() => setIsOpen(!isOpen)}>{value.name}</span>
       </div>
       {isOpen && (
         <div className="sort__popup">
@@ -33,22 +47,14 @@ export default function Sort() {
             {sortTypes.map((type, index) => (
               <li
                 key={index}
-                className={activeType === index ? 'active' : ''}
-                onClick={() => sortHandler(index)}>
-                {type}
+                className={value.sortProperty === type.sortProperty ? 'active' : ''}
+                onClick={() => sortHandler(type)}>
+                {type.name}
               </li>
             ))}
-            {/* <li className="active">популярности</li>
-            <li>цене</li>
-            <li>алфавиту</li> */}
           </ul>
         </div>
       )}
-      {/* <ul>
-          <li className="active">популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul> */}
     </div>
   );
 }
