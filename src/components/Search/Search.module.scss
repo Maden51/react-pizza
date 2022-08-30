@@ -1,0 +1,41 @@
+.root {
+    position: relative;
+    left: -120px;
+
+    .icon {
+        position: absolute;
+        opacity: 0.3;
+        left: 14px;
+        top: 12px;
+    }
+
+    .cancel {
+        fill:none;
+        stroke:rgba(0, 0, 0, 0.3);
+        stroke-linecap:round;
+        stroke-linejoin:round;
+        stroke-width:2px;
+        cursor: pointer;
+        position: absolute;
+        right: 14px;
+        top: 12px;
+
+        &:hover {
+            stroke:rgba(0, 0, 0, 0.6);
+        }
+    }
+
+    input {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 12px 20px;
+        padding-left: 42px;
+        width: 400px;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: all 0.15s ease-in-out;
+
+        &:focus {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+    }
+}
