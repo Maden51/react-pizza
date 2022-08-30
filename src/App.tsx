@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, useState } from 'react';
 import './scss/app.scss';
 import Header from './components/Header';
 import Home from './pages/Home';

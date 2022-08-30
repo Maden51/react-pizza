@@ -21,11 +21,13 @@ export default function Home() {
   useEffect(() => {
     setLoading(true);
 
+    const category = categoryId > 0 ? `category=${categoryId}` : '';
+    const sort = sortType.sortProperty.replace('-', '');
     const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
     const search = searchValue ? `&search=${searchValue}` : '';
-    fetch(`https://62ed2d76818ab252b60bc1c0.mockapi.io/items?page=${currentPage}&limit=4&${
-      categoryId > 0 ? `category=${categoryId}` : ''
-    }&sortBy=${sortType.sortProperty.replace('-', '')}&order=${order}${search}`)
+
+    fetch(`https://62ed2d76818ab252b60bc1c0.mockapi.io/items?page=
+      ${currentPage}&limit=4&${category}&sortBy=${sort}&order=${order}${search}`)
       .then((res) => res.json())
       .then((json) => {
         setPizzas(json);
