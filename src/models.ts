@@ -8,8 +8,3 @@ export interface IPizzaBlock {
   category: number;
   rating: number;
 }
-
-export interface ISearch {
-  searchValue: string;
-  setSearchValue: Function;
-}
