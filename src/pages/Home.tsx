@@ -6,17 +6,19 @@ import { IPizzaBlock } from '../models';
 import PizzaSkeleton from '../components/PizzaSkeleton';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { setCategoryId, setSortType } from '../redux/slices/filterSlice';
 
 export default function Home() {
+  const categoryId = useSelector((state: RootState) => state.filter.categoryId);
+  const sortType = useSelector((state: RootState) => state.filter.sort);
   const [pizzas, setPizzas] = useState<IPizzaBlock[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [categoryId, setCategodyId] = useState(0);
-  const [sortType, setSortType] = useState({
-    name: "популярности",
-    sortProperty: "rating"
-  });
-  const {searchValue} = useContext(SearchContext);
+  const { searchValue } = useContext(SearchContext);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setLoading(true);
@@ -43,14 +45,17 @@ export default function Home() {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories value={categoryId} onClick={(id: number) => setCategodyId(id)}  />
-        <Sort value={sortType} onClick={(i: any) => {setSortType(i)}} />
+        <Categories value={categoryId} onClick={(id: number) => dispatch(setCategoryId(id))} />
+        <Sort
+          value={sortType}
+          onClick={(i: any) => {
+            dispatch(setSortType(i));
+          }}
+        />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {loading ? skeletons : items}
-      </div>
-      <Pagination onChangePage = {(i:number) => setCurrentPage(i)} />
+      <div className="content__items">{loading ? skeletons : items}</div>
+      <Pagination onChangePage={(i: number) => setCurrentPage(i)} />
     </div>
   );
 }
