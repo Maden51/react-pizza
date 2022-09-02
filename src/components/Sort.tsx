@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface SortTypes {
   value: {
@@ -19,14 +19,27 @@ export const sortTypes = [
 
 export default function Sort({ value, onClick }: SortTypes) {
   const [isOpen, setIsOpen] = useState(false);
+  const sortRef = useRef<HTMLDivElement>(null);
 
   const sortHandler = (index: object) => {
     onClick(index);
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    const handleSortClick = (e: any) => {
+      if (!e.path.includes(sortRef.current)) {
+        setIsOpen(false);
+      }
+    };
+    document.body.addEventListener('click', handleSortClick);
+    return function cleanUp() {
+      document.body.removeEventListener('click', handleSortClick);
+    };
+  }, []);
+
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className="sort__label">
         <svg
           width="10"
