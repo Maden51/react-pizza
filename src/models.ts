@@ -1,4 +1,4 @@
-export interface IPizzaBlock {
+export type IPizzaBlock = {
   id?: number;
   imageUrl: string;
   title: string;

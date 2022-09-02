@@ -8,14 +8,13 @@ import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { setCategoryId, setSortType } from '../redux/slices/filterSlice';
+import { setCategoryId, setSortType, setCurrentPage } from '../redux/slices/filterSlice';
+import axios from 'axios';
 
 export default function Home() {
-  const categoryId = useSelector((state: RootState) => state.filter.categoryId);
-  const sortType = useSelector((state: RootState) => state.filter.sort);
+  const { categoryId, sort, currentPage } = useSelector((state: RootState) => state.filter);
   const [pizzas, setPizzas] = useState<IPizzaBlock[]>([]);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
   const { searchValue } = useContext(SearchContext);
 
   const dispatch = useDispatch();
@@ -24,19 +23,20 @@ export default function Home() {
     setLoading(true);
 
     const category = categoryId > 0 ? `category=${categoryId}` : '';
-    const sort = sortType.sortProperty.replace('-', '');
-    const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
+    const sortType = sort.sortProperty.replace('-', '');
+    const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
     const search = searchValue ? `&search=${searchValue}` : '';
 
-    fetch(`https://62ed2d76818ab252b60bc1c0.mockapi.io/items?page=
-      ${currentPage}&limit=4&${category}&sortBy=${sort}&order=${order}${search}`)
-      .then((res) => res.json())
-      .then((json) => {
-        setPizzas(json);
+    axios
+      .get<IPizzaBlock[]>(
+        `https://62ed2d76818ab252b60bc1c0.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortType}&order=${order}${search}`,
+      )
+      .then((res) => {
+        setPizzas(res.data);
         setLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [categoryId, sortType, searchValue, currentPage]);
+  }, [categoryId, sort, searchValue, currentPage]);
 
   const items = pizzas.map((obj) => <PizzaBlock key={obj.id} pizza={obj} />);
 
@@ -47,7 +47,7 @@ export default function Home() {
       <div className="content__top">
         <Categories value={categoryId} onClick={(id: number) => dispatch(setCategoryId(id))} />
         <Sort
-          value={sortType}
+          value={sort}
           onClick={(i: any) => {
             dispatch(setSortType(i));
           }}
@@ -55,7 +55,7 @@ export default function Home() {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{loading ? skeletons : items}</div>
-      <Pagination onChangePage={(i: number) => setCurrentPage(i)} />
+      <Pagination onChangePage={(i: number) => dispatch(setCurrentPage(i))} />
     </div>
   );
 }

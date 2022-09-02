@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-interface sortTypes {
+interface SortTypes {
   value: {
     name: string;
     sortProperty: string;
@@ -8,16 +8,17 @@ interface sortTypes {
   onClick: Function;
 }
 
-export default function Sort( {value, onClick}: sortTypes) {
+const sortTypes = [
+  { name: 'популярности ↑', sortProperty: '-rating' },
+  { name: 'популярности ↓', sortProperty: 'rating' },
+  { name: 'цене ↑', sortProperty: '-price' },
+  { name: 'цене ↓', sortProperty: 'price' },
+  { name: 'алфавиту ↑', sortProperty: '-title' },
+  { name: 'алфавиту ↓', sortProperty: 'title' },
+];
+
+export default function Sort({ value, onClick }: SortTypes) {
   const [isOpen, setIsOpen] = useState(false);
-  const sortTypes = [
-    {name: 'популярности ↑', sortProperty: '-rating'}, 
-    {name: 'популярности ↓', sortProperty: 'rating'}, 
-    {name: 'цене ↑', sortProperty: '-price'}, 
-    {name: 'цене ↓', sortProperty: 'price'}, 
-    {name: 'алфавиту ↑', sortProperty: '-title'},
-    {name: 'алфавиту ↓', sortProperty: 'title'}
-  ];
 
   const sortHandler = (index: object) => {
     onClick(index);

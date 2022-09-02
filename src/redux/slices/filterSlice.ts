@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface FilterState {
   categoryId: number;
+  currentPage: number;
   sort: {
     name: string;
     sortProperty: string;
@@ -10,6 +11,7 @@ export interface FilterState {
 
 const initialState: FilterState = {
   categoryId: 0,
+  currentPage: 1,
   sort: {
     name: "популярности",
     sortProperty: "rating"
@@ -24,12 +26,14 @@ export const filterSlice = createSlice({
       state.categoryId = action.payload;
     },
     setSortType(state, action: PayloadAction<{name: string, sortProperty: string}>) {
-      state.sort = action.payload
+      state.sort = action.payload;
+    },
+    setCurrentPage(state, action: PayloadAction<number>) {
+      state.currentPage = action.payload;
     }
   },
 })
 
-// Action creators are generated for each case reducer function
-export const { setCategoryId, setSortType } = filterSlice.actions
+export const { setCategoryId, setSortType, setCurrentPage } = filterSlice.actions
 
-export default filterSlice.reducer
+export default filterSlice.reducer  

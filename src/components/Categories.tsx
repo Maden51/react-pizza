@@ -1,11 +1,8 @@
-import { useState } from 'react';
-
-interface categoriesTypes{
-  value: number
+interface categoriesTypes {
+  value: number;
   onClick: Function;
 }
-export default function Categories({value, onClick}: categoriesTypes) {
-
+export default function Categories({ value, onClick }: categoriesTypes) {
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые', 'Новые'];
 
   return (
