@@ -1,21 +1,21 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import { IPizzaBlock } from '../models';
 import PizzaSkeleton from '../components/PizzaSkeleton';
 import Pagination from '../components/Pagination';
-import { SearchContext } from '../App';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { setCategoryId, setSortType, setCurrentPage } from '../redux/slices/filterSlice';
 import axios from 'axios';
 
 export default function Home() {
-  const { categoryId, sort, currentPage } = useSelector((state: RootState) => state.filter);
+  const { categoryId, sort, currentPage, searchValue } = useSelector(
+    (state: RootState) => state.filter,
+  );
   const [pizzas, setPizzas] = useState<IPizzaBlock[]>([]);
   const [loading, setLoading] = useState(true);
-  const { searchValue } = useContext(SearchContext);
 
   const dispatch = useDispatch();
 
