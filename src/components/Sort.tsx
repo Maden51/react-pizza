@@ -8,7 +8,7 @@ interface SortTypes {
   onClick: Function;
 }
 
-const sortTypes = [
+export const sortTypes = [
   { name: 'популярности ↑', sortProperty: '-rating' },
   { name: 'популярности ↓', sortProperty: 'rating' },
   { name: 'цене ↑', sortProperty: '-price' },
