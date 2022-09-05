@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CartItem from '../components/CartItem';
+import EmptyCart from '../components/EmptyCart';
 import { clearItems } from '../redux/slices/cartSlice';
 import { RootState } from '../redux/store';
 
@@ -11,6 +12,10 @@ export default function Cart() {
     dispatch(clearItems());
   };
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+
+  if (!totalCount) {
+    return <EmptyCart />;
+  }
   return (
     <div className="container container--cart">
       <div className="cart">

@@ -26,7 +26,7 @@ export default function PizzaBlock({ pizza }: PizzaProps) {
       title: pizza.title,
       price: pizza.price,
       type: typeNames[activeType],
-      size: sizeValues[activeType],
+      size: sizeValues[activeSize],
     };
     dispatch(addItem(newItem));
   };
