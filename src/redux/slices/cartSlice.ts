@@ -5,6 +5,7 @@ interface CartSlice {
     id: number,
     categodyId: number,
     imageUrl: string,
+    title: string,
     price: number,
     type: string,
     size: number,

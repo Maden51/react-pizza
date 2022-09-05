@@ -8,3 +8,14 @@ export type IPizzaBlock = {
   category: number;
   rating: number;
 }
+
+export type IPizzaItem = {
+  id: number;
+  categodyId: number;
+  imageUrl: string;
+  price: number;
+  type: string;
+  size: number;
+  title: string;
+  count?: number;
+}
