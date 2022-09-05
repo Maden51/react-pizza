@@ -7,7 +7,8 @@ interface CartSlice {
     imageUrl: string,
     price: number,
     type: string,
-    size: number
+    size: number,
+    count?: number,
   }>;
   totalPrice: number;
 }
@@ -22,10 +23,20 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem(state, action: PayloadAction<any>) {
-      state.items.push(action.payload);
+      const findItem = state.items.find((obj) => obj.id === action.payload.id);
+
+      if(findItem) {
+        findItem.count++;
+      } else {
+        state.items.push({
+          ...action.payload,
+          count: 1
+        });
+      }
+
       state.totalPrice = state.items.reduce((sum, item) => {
-        return item.price + sum
-      }, 0)
+            return item.price * item.count + sum
+          }, 0)
     },
     removeItem(state, action) {
       state.items.filter(item => item.id !== action.payload)

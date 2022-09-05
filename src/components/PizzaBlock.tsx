@@ -1,26 +1,32 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IPizzaBlock } from '../models';
 import { addItem } from '../redux/slices/cartSlice';
+import { RootState } from '../redux/store';
 
 interface PizzaProps {
   pizza: IPizzaBlock;
 }
 
 export default function PizzaBlock({ pizza }: PizzaProps) {
+  const cartItem = useSelector((state: RootState) =>
+    state.cart.items.find((item) => item.id === pizza.id),
+  );
+  const addedCount = cartItem ? cartItem.count : 0;
   const [activeSize, setActiveSize] = useState(0);
   const [activeType, setActiveType] = useState(0);
   const typeNames = ['тонкое', 'традицинное'];
+  const sizeValues = [26, 30, 40];
   const dispatch = useDispatch();
 
   const onClickAdd = () => {
     const newItem = {
       id: pizza.id,
       imageUrl: pizza.imageUrl,
-      categoryId: pizza.category,
+      title: pizza.title,
       price: pizza.price,
       type: typeNames[activeType],
-      size: activeSize,
+      size: sizeValues[activeType],
     };
     dispatch(addItem(newItem));
   };
@@ -66,7 +72,7 @@ export default function PizzaBlock({ pizza }: PizzaProps) {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
+          {addedCount > 0 && <i>{addedCount}</i>}
         </button>
       </div>
     </div>
