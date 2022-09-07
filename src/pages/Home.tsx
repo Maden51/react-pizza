@@ -16,12 +16,13 @@ import {
 import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router';
+import { setItems } from '../redux/slices/pizzaSlice';
 
 export default function Home() {
+  const pizzas = useSelector((state: RootState) => state.pizza.items);
   const { categoryId, sort, currentPage, searchValue } = useSelector(
     (state: RootState) => state.filter,
   );
-  const [pizzas, setPizzas] = useState<IPizzaBlock[]>([]);
   const [loading, setLoading] = useState(true);
   const isSearch = useRef(false);
   const isMounted = useRef(false);
@@ -29,20 +30,27 @@ export default function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setLoading(true);
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     const sortType = sort.sortProperty.replace('-', '');
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
     const search = searchValue ? `&search=${searchValue}` : '';
-    axios
-      .get<IPizzaBlock[]>(
+
+    try {
+      const { data } = await axios.get<IPizzaBlock[]>(
         `https://62ed2d76818ab252b60bc1c0.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortType}&order=${order}${search}`,
-      )
-      .then((res) => {
-        setPizzas(res.data);
-        setLoading(false);
-      });
+      );
+      dispatch(setItems(data));
+      setLoading(false);
+    } catch (error) {
+      console.log('Error', error);
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+
+    window.scrollTo(0, 0);
   };
   // Если был первый рендер, то проверяем URL параметры и сохраняем в редакс
   useEffect(() => {
@@ -56,7 +64,6 @@ export default function Home() {
 
   // Если был первый рендер, то запрашиваем пиццы
   useEffect(() => {
-    window.scrollTo(0, 0);
     if (!isSearch.current) {
       fetchPizzas();
     }
