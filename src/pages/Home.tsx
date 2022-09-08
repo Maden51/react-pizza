@@ -1,54 +1,43 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Categories from '../components/Categories';
 import Sort, { sortTypes } from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
-import { IPizzaBlock } from '../models';
 import PizzaSkeleton from '../components/PizzaSkeleton';
 import Pagination from '../components/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { AppDispatch, RootState } from '../redux/store';
 import {
   setCategoryId,
   setSortType,
   setCurrentPage,
   setFilters,
 } from '../redux/slices/filterSlice';
-import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router';
-import { setItems } from '../redux/slices/pizzaSlice';
+import { fetchItems } from '../redux/slices/pizzaSlice';
 
 export default function Home() {
-  const pizzas = useSelector((state: RootState) => state.pizza.items);
+  const { items, status } = useSelector((state: RootState) => state.pizza);
   const { categoryId, sort, currentPage, searchValue } = useSelector(
     (state: RootState) => state.filter,
   );
-  const [loading, setLoading] = useState(true);
+
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const fetchPizzas = async () => {
-    setLoading(true);
+    // setLoading(true);
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     const sortType = sort.sortProperty.replace('-', '');
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
     const search = searchValue ? `&search=${searchValue}` : '';
 
-    try {
-      const { data } = await axios.get<IPizzaBlock[]>(
-        `https://62ed2d76818ab252b60bc1c0.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortType}&order=${order}${search}`,
-      );
-      dispatch(setItems(data));
-      setLoading(false);
-    } catch (error) {
-      console.log('Error', error);
-      setLoading(false);
-    } finally {
-      setLoading(false);
-    }
+    const params = { category, sortType, order, search, currentPage };
+
+    dispatch(fetchItems(params));
 
     window.scrollTo(0, 0);
   };
@@ -83,7 +72,7 @@ export default function Home() {
     isMounted.current = true;
   }, [sort, categoryId, currentPage, navigate]);
 
-  const items = pizzas.map((obj) => <PizzaBlock key={obj.id} pizza={obj} />);
+  const pizzaItems = items.map((obj) => <PizzaBlock key={obj.id} pizza={obj} />);
 
   const skeletons = [...new Array(6)].map((_, index) => <PizzaSkeleton key={index} />);
 
@@ -99,7 +88,7 @@ export default function Home() {
         />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{loading ? skeletons : items}</div>
+      <div className="content__items">{status === 'loading' ? skeletons : pizzaItems}</div>
       <Pagination onChangePage={(i: number) => dispatch(setCurrentPage(i))} />
     </div>
   );
