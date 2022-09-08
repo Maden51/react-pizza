@@ -16,7 +16,7 @@ export const fetchItems = createAsyncThunk<IPizzaBlock | any, Params>(
   async (params) => {
     const {category, sortType, order, search, currentPage} = params
     const { data } = await axios.get(
-      `-https://62ed2d76818ab252b60bc1c0.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortType}&order=${order}${search}`,
+      `https://62ed2d76818ab252b60bc1c0.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortType}&order=${order}${search}`,
     );
     return data;
   }
