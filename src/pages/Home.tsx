@@ -15,6 +15,7 @@ import {
 import qs from 'qs';
 import { useNavigate } from 'react-router';
 import { fetchItems } from '../redux/slices/pizzaSlice';
+import Error from '../components/Error';
 
 export default function Home() {
   const { items, status } = useSelector((state: RootState) => state.pizza);
@@ -88,7 +89,11 @@ export default function Home() {
         />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{status === 'loading' ? skeletons : pizzaItems}</div>
+      {status === 'failed' ? (
+        <Error />
+      ) : (
+        <div className="content__items">{status === 'loading' ? skeletons : pizzaItems}</div>
+      )}
       <Pagination onChangePage={(i: number) => dispatch(setCurrentPage(i))} />
     </div>
   );
