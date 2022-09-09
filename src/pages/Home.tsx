@@ -5,23 +5,22 @@ import PizzaBlock from '../components/PizzaBlock';
 import PizzaSkeleton from '../components/PizzaSkeleton';
 import Pagination from '../components/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../redux/store';
+import { AppDispatch } from '../redux/store';
 import {
   setCategoryId,
   setSortType,
   setCurrentPage,
   setFilters,
+  selectFilter,
 } from '../redux/slices/filterSlice';
 import qs from 'qs';
 import { useNavigate } from 'react-router';
-import { fetchItems } from '../redux/slices/pizzaSlice';
+import { fetchItems, selectPizzaData } from '../redux/slices/pizzaSlice';
 import Error from '../components/Error';
 
 export default function Home() {
-  const { items, status } = useSelector((state: RootState) => state.pizza);
-  const { categoryId, sort, currentPage, searchValue } = useSelector(
-    (state: RootState) => state.filter,
-  );
+  const { items, status } = useSelector(selectPizzaData);
+  const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
 
   const isSearch = useRef(false);
   const isMounted = useRef(false);
@@ -30,7 +29,6 @@ export default function Home() {
   const navigate = useNavigate();
 
   const fetchPizzas = async () => {
-    // setLoading(true);
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     const sortType = sort.sortProperty.replace('-', '');
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
