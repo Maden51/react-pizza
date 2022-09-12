@@ -30,7 +30,6 @@ export default function Home() {
   const navigate = useNavigate();
 
   const fetchPizzas = async () => {
-    // setLoading(true);
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     const sortType = sort.sortProperty.replace('-', '');
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
