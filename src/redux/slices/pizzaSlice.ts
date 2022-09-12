@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios";
 import { IPizzaBlock } from "../../models";
+import { RootState } from "../store";
 
 
 interface Params {
@@ -63,6 +64,8 @@ export const pizzaSlice = createSlice({
     });
   }
 })
+
+export const selectPizzaData = ((state: RootState) => state.pizza)
 
 export const {setItems} = pizzaSlice.actions;
 
