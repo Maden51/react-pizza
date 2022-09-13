@@ -73,7 +73,7 @@ export default function Home() {
 
   const pizzaItems = items.map((obj) => <PizzaBlock key={obj.id} pizza={obj} />);
 
-  const skeletons = [...new Array(6)].map((_, index) => <PizzaSkeleton key={index} />);
+  const skeletons = [...new Array(4)].map((_, index) => <PizzaSkeleton key={index} />);
 
   return (
     <div className="container">
