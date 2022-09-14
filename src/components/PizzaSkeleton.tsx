@@ -1,6 +1,6 @@
 import ContentLoader from 'react-content-loader';
 
-const PizzaSkeleton = (props: any) => {
+const PizzaSkeleton: React.FC = (props) => {
   return (
     <ContentLoader
       className="pizza-block"

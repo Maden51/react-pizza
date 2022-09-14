@@ -81,7 +81,7 @@ export default function Home() {
         <Categories value={categoryId} onClick={(id: number) => dispatch(setCategoryId(id))} />
         <Sort
           value={sort}
-          onClick={(i: any) => {
+          onClick={(i: { name: string; sortProperty: string }) => {
             dispatch(setSortType(i));
           }}
         />
@@ -92,7 +92,10 @@ export default function Home() {
       ) : (
         <div className="content__items">{status === 'loading' ? skeletons : pizzaItems}</div>
       )}
-      <Pagination onChangePage={(i: number) => dispatch(setCurrentPage(i))} />
+      <Pagination
+        currentPage={currentPage}
+        onChangePage={(i: number) => dispatch(setCurrentPage(i))}
+      />
     </div>
   );
 }

@@ -3,22 +3,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IPizzaBlock } from '../models';
 import { addItem } from '../redux/slices/cartSlice';
-import { RootState } from '../redux/store';
+import { AppDispatch, RootState } from '../redux/store';
 
-interface PizzaProps {
+type PizzaProps = {
   pizza: IPizzaBlock;
-}
+};
 
-export default function PizzaBlock({ pizza }: PizzaProps) {
+const typeNames = ['тонкое', 'традицинное'];
+const sizeValues = [26, 30, 40];
+
+const PizzaBlock: React.FC<PizzaProps> = ({ pizza }) => {
   const cartItem = useSelector((state: RootState) =>
     state.cart.items.find((item) => item.id === pizza.id),
   );
   const addedCount = cartItem ? cartItem.count : 0;
   const [activeSize, setActiveSize] = useState(0);
   const [activeType, setActiveType] = useState(0);
-  const typeNames = ['тонкое', 'традицинное'];
-  const sizeValues = [26, 30, 40];
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const onClickAdd = () => {
     const newItem = {
@@ -80,4 +81,6 @@ export default function PizzaBlock({ pizza }: PizzaProps) {
       </div>
     </div>
   );
-}
+};
+
+export default PizzaBlock;

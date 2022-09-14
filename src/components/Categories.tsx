@@ -1,8 +1,8 @@
-interface categoriesTypes {
+type CategoriesProps = {
   value: number;
-  onClick: Function;
-}
-export default function Categories({ value, onClick }: categoriesTypes) {
+  onClick: any;
+};
+const Categories: React.FC<CategoriesProps> = ({ value, onClick }) => {
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые', 'Новые'];
 
   return (
@@ -19,4 +19,6 @@ export default function Categories({ value, onClick }: categoriesTypes) {
       </ul>
     </div>
   );
-}
+};
+
+export default Categories;

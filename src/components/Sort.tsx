@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 
-interface SortTypes {
+type SortTypes = {
   value: {
     name: string;
     sortProperty: string;
   };
   onClick: Function;
-}
+};
 
 export const sortTypes = [
   { name: 'популярности ↑', sortProperty: '-rating' },
@@ -21,8 +21,8 @@ export default function Sort({ value, onClick }: SortTypes) {
   const [isOpen, setIsOpen] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
 
-  const sortHandler = (index: object) => {
-    onClick(index);
+  const sortHandler = (obj: object) => {
+    onClick(obj);
     setIsOpen(false);
   };
 
