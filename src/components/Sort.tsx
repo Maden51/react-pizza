@@ -1,11 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 type SortTypes = {
   value: {
     name: string;
     sortProperty: string;
   };
-  onClick: Function;
+  onClick: (value: { name: string; sortProperty: string }) => void;
+};
+
+type PopupClick = MouseEvent & {
+  path: Node[];
 };
 
 export const sortTypes = [
@@ -17,18 +21,19 @@ export const sortTypes = [
   { name: 'алфавиту ↓', sortProperty: 'title' },
 ];
 
-export default function Sort({ value, onClick }: SortTypes) {
+const Sort: React.FC<SortTypes> = ({ value, onClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
 
-  const sortHandler = (obj: object) => {
-    onClick(obj);
+  const sortHandler = (value: { name: string; sortProperty: string }) => {
+    onClick(value);
     setIsOpen(false);
   };
 
   useEffect(() => {
-    const handleSortClick = (e: any) => {
-      if (!e.path.includes(sortRef.current)) {
+    const handleSortClick = (e: MouseEvent) => {
+      const _event = e as PopupClick;
+      if (!_event.path.includes(sortRef.current)) {
         setIsOpen(false);
       }
     };
@@ -71,4 +76,6 @@ export default function Sort({ value, onClick }: SortTypes) {
       )}
     </div>
   );
-}
+};
+
+export default Sort;
