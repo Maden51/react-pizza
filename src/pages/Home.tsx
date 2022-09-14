@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router';
 import { fetchItems, selectPizzaData } from '../redux/slices/pizzaSlice';
 import Error from '../components/Error';
 
-export default function Home() {
+const Home: React.FC = () => {
   const { items, status } = useSelector(selectPizzaData);
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
 
@@ -98,4 +98,6 @@ export default function Home() {
       />
     </div>
   );
-}
+};
+
+export default Home;

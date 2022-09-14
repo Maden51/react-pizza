@@ -1,9 +1,9 @@
-import { useEffect, useState, FC } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import { IPizzaBlock } from '../models';
 
-const PizzaPage: FC = () => {
+const PizzaPage: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [pizza, setPizza] = useState<IPizzaBlock | undefined>();
