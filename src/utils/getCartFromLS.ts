@@ -1,3 +1,4 @@
+import { CartItemProps } from "../redux/slices/cartSlice";
 import { getTotalPrice } from "./getTotalPrice";
 
 export const getCartFromLS = () => {
@@ -5,7 +6,7 @@ export const getCartFromLS = () => {
   const items = data ? JSON.parse(data) : [];
   const totalPrice = getTotalPrice(items);
   return {
-    items,
+    items: items as CartItemProps[],
     totalPrice,
   }
 }
