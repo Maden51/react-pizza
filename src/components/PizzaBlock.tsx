@@ -5,14 +5,14 @@ import { IPizzaBlock } from '../models';
 import { addItem } from '../redux/slices/cartSlice';
 import { AppDispatch, RootState } from '../redux/store';
 
-type PizzaProps = {
-  pizza: IPizzaBlock;
-};
-
 const typeNames = ['тонкое', 'традицинное'];
 const sizeValues = [26, 30, 40];
 
-const PizzaBlock: React.FC<PizzaProps> = ({ pizza }) => {
+type PizzaBlockProps = {
+  pizza: IPizzaBlock;
+};
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({ pizza }) => {
   const cartItem = useSelector((state: RootState) =>
     state.cart.items.find((item) => item.id === pizza.id),
   );

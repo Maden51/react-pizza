@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { SortProps } from '../redux/slices/filterSlice';
 
 type SortTypes = {
-  value: {
-    name: string;
-    sortProperty: string;
-  };
-  onClick: (value: { name: string; sortProperty: string }) => void;
+  value: SortProps;
+  onClick: (value: SortProps) => void;
 };
 
 type PopupClick = MouseEvent & {
   path: Node[];
 };
 
-export const sortTypes = [
+export const sortTypes: SortProps[] = [
   { name: 'популярности ↑', sortProperty: '-rating' },
   { name: 'популярности ↓', sortProperty: 'rating' },
   { name: 'цене ↑', sortProperty: '-price' },
@@ -25,7 +23,7 @@ const Sort: React.FC<SortTypes> = ({ value, onClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
 
-  const sortHandler = (value: { name: string; sortProperty: string }) => {
+  const sortHandler = (value: SortProps) => {
     onClick(value);
     setIsOpen(false);
   };

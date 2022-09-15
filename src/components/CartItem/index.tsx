@@ -1,19 +1,18 @@
-import { IPizzaItem } from '../../models';
 import { useDispatch } from 'react-redux';
-import { addItem, minusItem, removeItem } from '../../redux/slices/cartSlice';
+import { addItem, minusItem, removeItem, CartItemProps } from '../../redux/slices/cartSlice';
 import { Delete, Minus, Plus } from '../SVG';
 
-const CartItem: React.FC<IPizzaItem> = (item) => {
+const CartItem: React.FC<CartItemProps> = (item) => {
   const dispatch = useDispatch();
 
   const plusItem = () => {
-    dispatch(addItem({ id: item.id }));
+    dispatch(addItem(item));
   };
   const minusPizza = () => {
-    dispatch(minusItem({ id: item.id }));
+    dispatch(minusItem(item.id));
   };
   const removePizza = () => {
-    dispatch(removeItem({ id: item.id }));
+    dispatch(removeItem(item.id));
   };
   return (
     <div className="cart__item">
@@ -27,11 +26,12 @@ const CartItem: React.FC<IPizzaItem> = (item) => {
         </p>
       </div>
       <div className="cart__item-count">
-        <div
+        <button
+          disabled={item.count === 1}
           onClick={minusPizza}
           className="button button--outline button--circle cart__item-count-minus">
           <Minus />
-        </div>
+        </button>
         <b>{item.count}</b>
         <div
           onClick={plusItem}

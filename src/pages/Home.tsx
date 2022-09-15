@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import Categories from '../components/Categories';
 import Sort, { sortTypes } from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
+import Error from '../components/Error';
 import PizzaSkeleton from '../components/PizzaSkeleton';
 import Pagination from '../components/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,11 +13,11 @@ import {
   setCurrentPage,
   setFilters,
   selectFilter,
+  SortProps,
 } from '../redux/slices/filterSlice';
 import qs from 'qs';
 import { useNavigate } from 'react-router';
 import { fetchItems, selectPizzaData } from '../redux/slices/pizzaSlice';
-import Error from '../components/Error';
 
 const Home: React.FC = () => {
   const { items, status } = useSelector(selectPizzaData);
@@ -45,10 +46,20 @@ const Home: React.FC = () => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
       const sortState = sortTypes.find((obj) => obj.sortProperty === params.sortProperty);
-      dispatch(setFilters({ ...params, sortState }));
+      if (sortState) {
+        params.sort = sortState;
+      }
+      dispatch(
+        setFilters({
+          searchValue: String(params.search),
+          categoryId: Number(params.category),
+          currentPage: Number(params.currentPage),
+          sort,
+        }),
+      );
       isSearch.current = true;
     }
-  }, [dispatch]);
+  }, [dispatch, sort]);
 
   // Если был первый рендер, то запрашиваем пиццы
   useEffect(() => {
@@ -81,13 +92,13 @@ const Home: React.FC = () => {
         <Categories value={categoryId} onClick={(id: number) => dispatch(setCategoryId(id))} />
         <Sort
           value={sort}
-          onClick={(i: { name: string; sortProperty: string }) => {
+          onClick={(i: SortProps) => {
             dispatch(setSortType(i));
           }}
         />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      {status === 'failed' ? (
+      {status === 'error' ? (
         <Error />
       ) : (
         <div className="content__items">{status === 'loading' ? skeletons : pizzaItems}</div>
