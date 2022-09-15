@@ -19,7 +19,7 @@ export const sortTypes: SortProps[] = [
   { name: 'алфавиту ↓', sortProperty: 'title' },
 ];
 
-const Sort: React.FC<SortTypes> = ({ value, onClick }) => {
+const Sort: React.FC<SortTypes> = React.memo(({ value, onClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
 
@@ -74,6 +74,6 @@ const Sort: React.FC<SortTypes> = ({ value, onClick }) => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;

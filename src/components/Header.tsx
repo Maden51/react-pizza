@@ -4,11 +4,21 @@ import Search from './Search';
 import { useSelector } from 'react-redux';
 import { selectCart } from '../redux/slices/cartSlice';
 import { Cart } from './SVG';
+import { useEffect, useRef } from 'react';
 
-export default function Header() {
+const Header: React.FC = () => {
   const { totalPrice, items } = useSelector(selectCart);
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
   const location = useLocation();
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(items);
+      localStorage.setItem('cart', json);
+    }
+    isMounted.current = true;
+  }, [items]);
 
   return (
     <div className="header">
@@ -36,4 +46,6 @@ export default function Header() {
       </div>
     </div>
   );
-}
+};
+
+export default Header;

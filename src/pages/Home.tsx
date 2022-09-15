@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import Categories from '../components/Categories';
 import Sort, { sortTypes } from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
@@ -23,11 +23,18 @@ const Home: React.FC = () => {
   const { items, status } = useSelector(selectPizzaData);
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
 
-  const isSearch = useRef(false);
-  const isMounted = useRef(false);
-
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+
+  const onChangeCategory = useCallback(
+    (i: number) => {
+      dispatch(setCategoryId(i));
+    },
+    [dispatch],
+  );
+
+  const isSearch = useRef(false);
+  const isMounted = useRef(false);
 
   const fetchPizzas = async () => {
     const category = categoryId > 0 ? `category=${categoryId}` : '';
@@ -45,14 +52,16 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
+      // console.log(params);
       const sortState = sortTypes.find((obj) => obj.sortProperty === params.sortProperty);
+      // console.log(sortState);
       if (sortState) {
         params.sort = sortState;
       }
       dispatch(
         setFilters({
           searchValue: String(params.search),
-          categoryId: Number(params.category),
+          categoryId: Number(params.categoryId),
           currentPage: Number(params.currentPage),
           sort,
         }),
@@ -89,7 +98,7 @@ const Home: React.FC = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories value={categoryId} onClick={(id: number) => dispatch(setCategoryId(id))} />
+        <Categories value={categoryId} onClick={onChangeCategory} />
         <Sort
           value={sort}
           onClick={(i: SortProps) => {

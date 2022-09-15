@@ -23,13 +23,6 @@ export const fetchItems = createAsyncThunk<IPizzaBlock[], Params>(
   }
 )
 
-// export enum Status {
-//   LOADING = 'loading',
-//   SUCCESS = 'success',
-//   ERROR = 'error',
-//   IDLE = 'idle',
-// }
-
 export interface PizzaSlice {
   items: IPizzaBlock[];
   status: 'loading' | 'success' | 'error' | 'idle'
