@@ -6,7 +6,7 @@ import Error from '../components/Error';
 import PizzaSkeleton from '../components/PizzaSkeleton';
 import Pagination from '../components/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../redux/store';
+import { AppDispatch } from '../redux/store/store';
 import { setCategoryId, setSortType, setCurrentPage, setFilters } from '../redux/filter/slice';
 import { selectFilter } from '../redux/filter/selectors';
 import qs from 'qs';
