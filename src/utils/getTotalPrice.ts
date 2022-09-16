@@ -1,4 +1,4 @@
-import { CartItemProps } from "../redux/slices/cartSlice"
+import { CartItemProps } from "../redux/cart/types"
 
 export const getTotalPrice = (items: CartItemProps[]) => {
   return items.reduce((sum, item) => {

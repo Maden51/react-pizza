@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { addItem, minusItem, removeItem, CartItemProps } from '../../redux/slices/cartSlice';
+import { addItem, minusItem, removeItem } from '../../redux/cart/slice';
+import { CartItemProps } from '../../redux/cart/types';
 import { Delete, Minus, Plus } from '../SVG';
 
 const CartItem: React.FC<CartItemProps> = (item) => {

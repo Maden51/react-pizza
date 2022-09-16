@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { SortProps } from '../redux/slices/filterSlice';
+import { SortProps } from '../redux/filter/types';
 
 type SortTypes = {
   value: SortProps;

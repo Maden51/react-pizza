@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IPizzaBlock } from '../models';
-import { addItem } from '../redux/slices/cartSlice';
+import { addItem } from '../redux/cart/slice';
 import { AppDispatch, RootState } from '../redux/store';
 
 const typeNames = ['тонкое', 'традицинное'];

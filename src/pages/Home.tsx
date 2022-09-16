@@ -7,17 +7,13 @@ import PizzaSkeleton from '../components/PizzaSkeleton';
 import Pagination from '../components/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../redux/store';
-import {
-  setCategoryId,
-  setSortType,
-  setCurrentPage,
-  setFilters,
-  selectFilter,
-  SortProps,
-} from '../redux/slices/filterSlice';
+import { setCategoryId, setSortType, setCurrentPage, setFilters } from '../redux/filter/slice';
+import { selectFilter } from '../redux/filter/selectors';
 import qs from 'qs';
 import { useNavigate } from 'react-router';
-import { fetchItems, selectPizzaData } from '../redux/slices/pizzaSlice';
+import { fetchItems } from '../redux/pizza/slice';
+import { selectPizzaData } from '../redux/pizza/selectros';
+import { SortProps } from '../redux/filter/types';
 
 const Home: React.FC = () => {
   const { items, status } = useSelector(selectPizzaData);
