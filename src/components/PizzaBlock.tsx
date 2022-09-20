@@ -12,7 +12,7 @@ type PizzaBlockProps = {
   pizza: IPizzaBlock;
 };
 
-const PizzaBlock: React.FC<PizzaBlockProps> = ({ pizza }) => {
+export const PizzaBlock: React.FC<PizzaBlockProps> = ({ pizza }) => {
   const cartItem = useSelector((state: RootState) =>
     state.cart.items.find((item) => item.id === pizza.id),
   );
@@ -82,5 +82,3 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ pizza }) => {
     </div>
   );
 };
-
-export default PizzaBlock;

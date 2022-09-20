@@ -1,6 +1,6 @@
 import style from './error.module.scss';
 
-const Error: React.FC = () => {
+export const Error: React.FC = () => {
   return (
     <div className={style.root}>
       <h2>Произошла непредвиденная ошибка 😕</h2>
@@ -10,5 +10,3 @@ const Error: React.FC = () => {
     </div>
   );
 };
-
-export default Error;

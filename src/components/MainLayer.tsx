@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router';
-import Header from './Header';
+import { Header } from '../components';
 
-const MainLayer: React.FC = () => {
+export const MainLayer: React.FC = () => {
   return (
     <div className="wrapper">
       <Header />
@@ -11,5 +11,3 @@ const MainLayer: React.FC = () => {
     </div>
   );
 };
-
-export default MainLayer;

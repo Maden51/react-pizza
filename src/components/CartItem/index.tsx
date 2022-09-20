@@ -3,7 +3,7 @@ import { addItem, minusItem, removeItem } from '../../redux/cart/slice';
 import { CartItemProps } from '../../redux/cart/types';
 import { Delete, Minus, Plus } from '../SVG';
 
-const CartItem: React.FC<CartItemProps> = (item) => {
+export const CartItem: React.FC<CartItemProps> = (item) => {
   const dispatch = useDispatch();
 
   const plusItem = () => {
@@ -51,5 +51,3 @@ const CartItem: React.FC<CartItemProps> = (item) => {
     </div>
   );
 };
-
-export default CartItem;

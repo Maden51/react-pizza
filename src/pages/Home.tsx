@@ -1,10 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
-import Categories from '../components/Categories';
-import Sort, { sortTypes } from '../components/Sort';
-import PizzaBlock from '../components/PizzaBlock';
-import Error from '../components/Error';
-import PizzaSkeleton from '../components/PizzaSkeleton';
-import Pagination from '../components/Pagination';
+import { Categories, Sort, PizzaBlock, Error, PizzaSkeleton, Pagination } from '../components';
+import { sortTypes } from '../components/Sort';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../redux/store/store';
 import { setCategoryId, setSortType, setCurrentPage, setFilters } from '../redux/filter/slice';

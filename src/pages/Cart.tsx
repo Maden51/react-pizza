@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import CartItem from '../components/CartItem';
-import EmptyCart from '../components/EmptyCart';
+import { CartItem, EmptyCart } from '../components';
 import { ArrowLeft, CartClear, CartPage } from '../components/SVG';
 import { clearItems } from '../redux/cart/slice';
 import { selectCart } from '../redux/cart/selectors';
