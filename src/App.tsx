@@ -5,8 +5,8 @@ import { Route, Routes } from 'react-router';
 import { MainLayer } from './components';
 import React, { Suspense } from 'react';
 
-const Cart = React.lazy(() => import('./pages/Cart'));
-const PizzaPage = React.lazy(() => import('./pages/PizzaPage'));
+const Cart = React.lazy(() => import(/* webpackChunkName: "Cart" */'./pages/Cart'));
+const PizzaPage = React.lazy(() => import(/* webpackChunkName: "PizzaPage" */'./pages/PizzaPage'));
 
 function App() {
   return (
